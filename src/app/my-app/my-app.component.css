@@ -1,0 +1,30 @@
+.map {
+  height: 400px;
+  width: 826px;
+  border: 5px solid #c3c3cc;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 30px auto;
+}
+.next-button,.previous-button,.submit-button
+{
+  background-color: #20d8e4;
+  padding: 11px 30px;
+  border: 1px solid #a7b4e6;
+  border-radius: 5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 19px;
+}
+div.prevContainer{
+  position: relative;
+  left: 528px;
+  display: inline-block;
+  top: 0px;
+}
+div.nextContainer{
+  position: relative;
+  left: 809px;
+  display: inline-block;
+  top: 0px;
+}

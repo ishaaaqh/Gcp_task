@@ -1,0 +1,16 @@
+    <div class="container" >
+      <div #map class="map" id="map">
+    </div>
+  </div>
+  <div class="prevContainer">
+      <button class="previous-button">Previous Gcp</button>
+  </div>
+  <div class="nextContainer">
+      <button class="next-button" (click)="Prev()">Next Gcp{{currentgcp+1}}</button><!-- /code2 -->
+      <button class="submit-button">Submit The Images</button>
+   </div>
+
+  <!--   //code1:syntax to be true if the given gcp is the last one => if gcp.length==currentGcp
+      //code2:ngIf="!gcp.length==currentGcp"
+ -->
+<!-- *ngFor='let i of gcps' -->

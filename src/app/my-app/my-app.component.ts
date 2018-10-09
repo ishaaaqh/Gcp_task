@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import { getCenter } from 'ol/extent.js';
@@ -15,16 +15,21 @@ import { SlickModule } from 'ngx-slick';
   templateUrl: './my-app.component.html',
   styleUrls: ['./my-app.component.css']
 })
-export class MyAppComponent implements OnInit{
+export class MyAppComponent implements OnInit, AfterViewInit{
   public tranGcp = [];
-
+  @ViewChild('mapElement') mapElement;
   public currentGcp:number=1;
-  public currentImages=this.tranGcp[0];//this is not working >>> Fix this
-  constructor(private gCPServiceService: GCPServiceService) {  }
+  public currentImages;//this is not working >>> Fix this
+  constructor(private gCPServiceService: GCPServiceService) {  };
 
+  ngAfterViewInit() {
+    this.currentImages = this.tranGcp[0];
+    console.log(this.tranGcp)
+  };
   previous() {
     if(this.currentGcp>1){
      this.currentGcp--;
+
      console.log('The value is '+ this.currentGcp);
      this.currentImages=this.tranGcp[this.currentGcp-1]
      console.log(this.currentImages)
@@ -36,26 +41,27 @@ export class MyAppComponent implements OnInit{
     this.currentGcp++;
     console.log('this value is ' + this.currentGcp);
     this.currentImages=this.tranGcp[this.currentGcp-1]
-    console.log(this.currentImages);
 
-    let extent=[0, 0, 1025, 968];
+    let mapRef= this.mapElement.nativeElement;
+    console.log(mapRef);
+     var extent = [0, 0, 1024, 968];
     console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${this.currentImages[0].image}`);
     const projection = new Projection({
     });
      extent: extent
        console.log(this.currentImages[0].image);
        console.log(this.currentImages)
-      for (let image in this.currentImages) {
+      // for (let image in this.currentImages) {
        var map = new Map({
         layers: [
           new ImageLayer({
             source: new Static({
-              url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/${this.currentImages[image].image}`,
+              url: 'https://s3aws.blob.core.windows.net/uploads/dev-site/19/${this.currentImages[0].image}',
               imageExtent: extent,
             })
           })
         ],
-        target: 'map',
+        target: mapRef,
         view: new View({
           projection: projection,
           center: getCenter(extent),
@@ -63,27 +69,25 @@ export class MyAppComponent implements OnInit{
           maxZoom: 8,
         })
        });
-      }
+      // }
 
    }
   }
 
   ngOnInit() {
-    const extent:number[] = [0, 0, 1024, 968];
+   // const extent:number[] = [0, 0, 1024, 968];
     let GcpInfo;
     let currentGcp=1;
     let ElementRef = document.getElementById("map");
-    // let inputRef:
-    // @ViewChild('map',{ read: ElementRef } )chipElement: ElementRef;
 
     this.gCPServiceService.getGcp().subscribe(
 
     filterGcpsAlone => {
       for (let gcp in filterGcpsAlone) {
-        if(typeof(filterGcpsAlone[gcp]) != "string") {
-          this.tranGcp.push(filterGcpsAlone[gcp]);
+       if(typeof(filterGcpsAlone[gcp]) != "string") {
+        this.tranGcp.push(filterGcpsAlone[gcp]);
 
-        }
+       }
       }
 
       setTimeout(() => {
@@ -123,3 +127,5 @@ export class MyAppComponent implements OnInit{
 // *for the dynamic loading of the containers
 
 //{ read: ElementRef })
+    // let inputRef:
+    // @ViewChild('map',{ read: ElementRef } )chipElement: ElementRef;

@@ -14,7 +14,7 @@ export class GCPServiceService {
 
   }
   // getData() {
-  //   return this.http.get(this.serverData);
+  //   return this.http.get(this.serverData)(can use the rxjs operator methods for this manipulation);
   // }
   getGcp(): Observable<any> {
     return this.http.get(this.gcpUrl).pipe(

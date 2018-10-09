@@ -1,5 +1,5 @@
 .map {
-  height: 400px;
+  height: auto;
   width: 826px;
   border: 5px solid #c3c3cc;
   overflow: hidden;
@@ -18,13 +18,27 @@
 }
 div.prevContainer{
   position: relative;
-  left: 528px;
+  left: 536px;
+  display: inline-block;
+  top: 0px;
+  }
+div.nextContainer{
+  position: relative;
+  left: 983px;
   display: inline-block;
   top: 0px;
 }
-div.nextContainer{
-  position: relative;
-  left: 809px;
-  display: inline-block;
-  top: 0px;
+.curretnGcp{
+  padding:10px;
+}
+#container-images{
+  overflow: visible;
+}
+#images{
+  height:300px;
+  width:500px;
+}
+.carousel{
+  height:500px;
+  width:800px;
 }

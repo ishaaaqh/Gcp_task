@@ -15,67 +15,74 @@ import { SlickModule } from 'ngx-slick';
   templateUrl: './my-app.component.html',
   styleUrls: ['./my-app.component.css']
 })
-export class MyAppComponent implements OnInit, AfterViewInit{
+export class MyAppComponent implements OnInit {
   public tranGcp = [];
   @ViewChild('mapElement') mapElement;
   public currentGcp:number=1;
-  public currentImages;//this is not working >>> Fix this
+  public currentImages;                            //this is not working >>> Fix this
   constructor(private gCPServiceService: GCPServiceService) {  };
 
-  ngAfterViewInit() {
-    this.currentImages = this.tranGcp[0];
-    console.log(this.tranGcp)
-  };
-  previous() {
+  // ngAfterViewInit() {
+  //   this.currentImages = this.tranGcp[0];        //=> this is not working
+  //   console.log(this.tranGcp)
+  // };
+
+   previous() {
     if(this.currentGcp>1){
      this.currentGcp--;
-
      console.log('The value is '+ this.currentGcp);
      this.currentImages=this.tranGcp[this.currentGcp-1]
-     console.log(this.currentImages)
+     console.log(this.currentImages);
+     this.generateMap(this.currentImages);
     }
   }
 
   next(){
-   if(this.currentGcp<6){
-    this.currentGcp++;
-    console.log('this value is ' + this.currentGcp);
-    this.currentImages=this.tranGcp[this.currentGcp-1]
-
-    let mapRef= this.mapElement.nativeElement;
-    console.log(mapRef);
-     var extent = [0, 0, 1024, 968];
-    console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${this.currentImages[0].image}`);
-    const projection = new Projection({
-    });
-     extent: extent
-       console.log(this.currentImages[0].image);
-       console.log(this.currentImages)
-      // for (let image in this.currentImages) {
-       var map = new Map({
-        layers: [
-          new ImageLayer({
-            source: new Static({
-              url: 'https://s3aws.blob.core.windows.net/uploads/dev-site/19/${this.currentImages[0].image}',
-              imageExtent: extent,
-            })
-          })
-        ],
-        target: mapRef,
-        view: new View({
-          projection: projection,
-          center: getCenter(extent),
-          zoom: 2,
-          maxZoom: 8,
-        })
-       });
-      // }
+    if(this.currentGcp<6){
+     this.currentGcp++;
+     console.log('this value is ' + this.currentGcp);
+     this.currentImages=this.tranGcp[this.currentGcp-1];
+     this.generateMap(this.currentImages);
 
    }
   }
 
+  generateMap(data){
+    let mapRef= this.mapElement.nativeElement;
+    let extent = [0, 0, 1024, 968];
+    console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${data[0].image}`);
+    const projection = new Projection({
+     // code: 'xkcd-image',
+     // units: 'pixels',
+     extent: extent
+    });
+    console.log(data[0].image);
+    console.log(this.currentImages)
+    for (let images of data) {
+      console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/{images.image}`);
+     var map = new Map({
+      layers: [
+        new ImageLayer({
+          source: new Static({
+            url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/${images.image}`,
+            projection: projection,
+            imageExtent: extent,
+          })
+        })
+      ],
+      target: mapRef,
+      view: new View({
+        projection: projection,
+        center: getCenter(extent),
+        zoom: 2,
+        maxZoom: 8,
+      })
+     });
+    }
+
+      }
+
   ngOnInit() {
-   // const extent:number[] = [0, 0, 1024, 968];
     let GcpInfo;
     let currentGcp=1;
     let ElementRef = document.getElementById("map");
@@ -99,7 +106,7 @@ export class MyAppComponent implements OnInit, AfterViewInit{
         console.log(this.currentImages);
     },
     );
-        // const projection = new Projection({
+      // const projection = new Projection({
       //  });
       //    extent: extent
       //  for (let image of currentImages) {
@@ -107,7 +114,7 @@ export class MyAppComponent implements OnInit, AfterViewInit{
       //   layers: [
       //       new ImageLayer({
       //         source: new Static({
-      //             url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/${image.image}`,
+      //             url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/DJI_0045.JPG`,
       //             imageExtent: extent,
       //         })
       //       })
@@ -122,6 +129,29 @@ export class MyAppComponent implements OnInit, AfterViewInit{
       // });
       //  }
 
+  // let extent = [0, 0, 1024, 968];
+  // const projection = new Projection({
+  //      });
+  //        extent: extent
+  //     // for (let image of currentImages) {
+  //     var map = new Map({
+  //       layers: [
+  //           new ImageLayer({
+  //             source: new Static({
+  //                 url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/DJI_0045.JPG`,
+  //                 imageExtent: extent,
+  //             })
+  //           })
+  //       ],
+  //         target: 'map2',
+  //         view: new View({
+  //           projection: projection,
+  //           center: getCenter(extent),
+  //           zoom: 2,
+  //           maxZoom: 8,
+  //         })
+  //     });
+  //      // }
   }
 }
 // *for the dynamic loading of the containers

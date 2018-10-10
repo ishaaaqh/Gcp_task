@@ -1,8 +1,8 @@
 .map {
   height: auto;
-  width: 826px;
+  width: 80%;
   border: 5px solid #c3c3cc;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 10px;
   margin: 30px auto;
 }
@@ -40,5 +40,13 @@ div.nextContainer{
 }
 .carousel{
   height:500px;
+  width:800px;
+}
+.container{
+  border:1px solid red;
+  height: auto;
+}
+#map2{
+  height:200px;
   width:800px;
 }

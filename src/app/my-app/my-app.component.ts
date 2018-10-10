@@ -21,13 +21,9 @@ export class MyAppComponent implements OnInit {
   public tranGcp = [];
   @ViewChild('mapElement') mapElement;
   public currentGcp:number=0;
-  public currentImages;                            //this is not working >>> Fix this
+  public currentImages;
   constructor(private gCPServiceService: GCPServiceService) {  };
 
-  // ngAfterViewInit() {
-  //   this.currentImages = this.tranGcp[0];        //=> this is not working
-  //   console.log(this.tranGcp)
-  // };
 
    previous() {
     if(this.currentGcp>1){
@@ -58,21 +54,18 @@ export class MyAppComponent implements OnInit {
     let extent = [0, 0, 1024, 968];
     console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${data[0].image}`);
     const projection = new Projection({
-     // code: 'xkcd-image',
-     // units: 'pixels',
      extent: extent
     });
     console.log(data[0].image);
     console.log(this.currentImages)
     let count = 0;
     $('#map').siblings().empty
-    for (let images of data) {
 
+    for (let images of data) {
     const container = document.createElement('div');
     $(container).insertBefore('#map');
     $(container).css('width', '500px');
     $(container).css('height', '500px');
-
     $(container).attr('id', `map_${images.Easting}_${count}`);
 
     console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${images.image}`);
@@ -129,56 +122,5 @@ export class MyAppComponent implements OnInit {
         console.log(this.currentImages);
     },
     );
-      // const projection = new Projection({
-      //  });
-      //    extent: extent
-      //  for (let image of currentImages) {
-      // var map = new Map({
-      //   layers: [
-      //       new ImageLayer({
-      //         source: new Static({
-      //             url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/DJI_0045.JPG`,
-      //             imageExtent: extent,
-      //         })
-      //       })
-      //   ],
-      //     target: 'map',
-      //     view: new View({
-      //       projection: projection,
-      //       center: getCenter(extent),
-      //       zoom: 2,
-      //       maxZoom: 8,
-      //     })
-      // });
-      //  }
-
-  // let extent = [0, 0, 1024, 968];
-  // const projection = new Projection({
-  //      });
-  //        extent: extent
-  //     // for (let image of currentImages) {
-  //     var map = new Map({
-  //       layers: [
-  //           new ImageLayer({
-  //             source: new Static({
-  //                 url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/DJI_0045.JPG`,
-  //                 imageExtent: extent,
-  //             })
-  //           })
-  //       ],
-  //         target: 'map2',
-  //         view: new View({
-  //           projection: projection,
-  //           center: getCenter(extent),
-  //           zoom: 2,
-  //           maxZoom: 8,
-  //         })
-  //     });
-  //      // }
-  }
+      }
 }
-// *for the dynamic loading of the containers
-
-//{ read: ElementRef })
-    // let inputRef:
-    // @ViewChild('map',{ read: ElementRef } )chipElement: ElementRef;

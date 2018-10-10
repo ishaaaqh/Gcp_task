@@ -1,10 +1,13 @@
 .map {
-  height: auto;
+  height: 90%;
   width: 80%;
   border: 5px solid #c3c3cc;
   overflow: visible;
   border-radius: 10px;
-  margin: 30px auto;
+  margin: 5px 20px;
+}
+body{
+  margin: 10%;
 }
 .next-button,.previous-button,.submit-button
 {
@@ -43,10 +46,21 @@ div.nextContainer{
   width:800px;
 }
 .container{
-  border:1px solid red;
   height: auto;
+  display:flex;
+  flex-direction:column;
 }
 #map2{
   height:200px;
   width:800px;
+}
+.ol-unselectable
+{
+  width: 792px;
+  height: 476px;
+}
+
+canvas {
+  width: 500px;
+  height: 500px;
 }

@@ -6,7 +6,7 @@ import { getCenter } from 'ol/extent.js';
 import ImageLayer from 'ol/layer/Image.js';
 import Projection from 'ol/proj/Projection.js';
 import Static from 'ol/source/ImageStatic.js';
-import { GCPServiceService } from '../../app/gcp-service.service';
+import { GCPServiceService as GCPService } from '../../app/gcp-service.service';
 import { map, filter } from 'rxjs/operators';
 import { SlickModule } from 'ngx-slick';
 import * as $ from 'jquery';
@@ -22,7 +22,7 @@ export class MyAppComponent implements OnInit {
   @ViewChild('mapElement') mapElement;
   public currentGcp:number=0;
   public currentImages;
-  constructor(private gCPServiceService: GCPServiceService) {  };
+  constructor(private gCPService: GCPService) {  };
 
 
    previous() {
@@ -30,80 +30,80 @@ export class MyAppComponent implements OnInit {
      this.currentGcp--;
      let mapRef= this.mapElement.nativeElement;
      mapRef.innerHTML="";
-     console.log('The value is '+ this.currentGcp);
      this.currentImages=this.tranGcp[this.currentGcp-1]
-     console.log(this.currentImages);
+     $(".container").children().hide();
      this.generateMap(this.currentImages);
     }
   }
 
   next(){
     if(this.currentGcp<6){
-     this.currentGcp++;
-     let mapRef= this.mapElement.nativeElement;
-     mapRef.innerHTML="";
-     console.log('this value is ' + this.currentGcp);
-     this.currentImages=this.tranGcp[this.currentGcp-1];
-     this.generateMap(this.currentImages);
+      this.currentGcp++;
+      let mapRef= this.mapElement.nativeElement;
+      mapRef.innerHTML="";
+      this.currentImages=this.tranGcp[this.currentGcp-1];
+      $(".container").children().hide();
+      this.generateMap(this.currentImages);
 
    }
   }
 
   generateMap(data){
+
     let mapRef= this.mapElement.nativeElement;
+    
     let extent = [0, 0, 1024, 968];
-    console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${data[0].image}`);
+
     const projection = new Projection({
      extent: extent
     });
-    console.log(data[0].image);
-    console.log(this.currentImages)
     let count = 0;
-    $('#map').siblings().empty
 
     for (let images of data) {
-    const container = document.createElement('div');
-    $(container).insertBefore('#map');
-    $(container).css('width', '500px');
-    $(container).css('height', '500px');
-    $(container).attr('id', `map_${images.Easting}_${count}`);
+      const container = document.createElement('div')
+        $(container).insertBefore('#map');
+        $(container).css('width', '700px');
+        $(container).css('height', '400px');
+        $(container).attr('id', `map_${images.Easting}_${count}`);        
+        $(container).css('margin', `10px auto`);
+        $(container).css('border', `1px solid grey`);
 
-    console.log(`https://s3aws.blob.core.windows.net/uploads/dev-site/19/${images.image}`);
-    var map = new Map({
-      controls : new defaultControls({
-      attribution : false,
-      zoom : false,
-      rotate:false,
-     }),
-     layers: [
-       new ImageLayer({
-         source: new Static({
-           url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/${images.image}`,
-           projection: projection,
-           imageExtent: extent,
-         })
-       })
-     ],
-     target: `map_${images.Easting}_${count}`,
-     view: new View({
-       projection: projection,
-       center: getCenter(extent),
-       zoom: 2,
-       maxZoom: 8,
-     })
-    });
 
-     count += 1;
+      var map = new Map({
+        controls : new defaultControls({
+        attribution : false,
+        zoom : true,
+        rotate:false,
+      }),
+      layers: [
+        new ImageLayer({
+          source: new Static({
+            url: `https://s3aws.blob.core.windows.net/uploads/dev-site/19/${images.image}`,
+            projection: projection,
+            imageExtent: extent,
+          })
+        })
+      ],
+      target: `map_${images.Easting}_${count}`,
+      view: new View({
+        projection: projection,
+        center: getCenter(extent),
+        zoom: 4,
+        maxZoom: 8,
+      })
+      });
+      
+      count += 1;
     }
 
-      }
+  }
 
   ngOnInit() {
     let GcpInfo;
     let currentGcp=1;
     let ElementRef = document.getElementById("map");
 
-    this.gCPServiceService.getGcp().subscribe(
+    this.gCPService.getGcp().subscribe(
 
     filterGcpsAlone => {
       for (let gcp in filterGcpsAlone) {
@@ -112,7 +112,6 @@ export class MyAppComponent implements OnInit {
 
        }
       }
-
       setTimeout(() => {
         console.log(this.tranGcp);
         console.log(this.currentImages);

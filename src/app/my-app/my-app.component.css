@@ -1,14 +1,6 @@
-.map {
-  height: 90%;
-  width: 80%;
-  border: 5px solid #c3c3cc;
-  overflow: visible;
-  border-radius: 10px;
-  margin: 5px 20px;
-}
-body{
-  margin: 10%;
-}
+
+
+
 .next-button,.previous-button,.submit-button
 {
   background-color: #20d8e4;
@@ -19,18 +11,7 @@ body{
   letter-spacing: 1px;
   font-size: 19px;
 }
-div.prevContainer{
-  position: relative;
-  left: 536px;
-  display: inline-block;
-  top: 0px;
-  }
-div.nextContainer{
-  position: relative;
-  left: 983px;
-  display: inline-block;
-  top: 0px;
-}
+
 .curretnGcp{
   padding:10px;
 }

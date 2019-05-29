@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { MyAppComponent } from './my-app/my-app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { SlickModule } from 'ngx-slick';
+import { MapComponent } from './map/map.component';
 
 
 
@@ -11,6 +12,7 @@ import { SlickModule } from 'ngx-slick';
   declarations: [
     AppComponent,
     MyAppComponent,
+    MapComponent,
       ],
   imports: [
     BrowserModule,

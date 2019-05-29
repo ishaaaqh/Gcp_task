@@ -13,12 +13,10 @@ export class GCPServiceService {
   constructor(private http: HttpClient) {
 
   }
-  // getData() {
-  //   return this.http.get(this.serverData)(can use the rxjs operator methods for this manipulation);
-  // }
+  
   getGcp(): Observable<any> {
     return this.http.get(this.gcpUrl).pipe(
-      tap(status => console.log('fetched status'+ JSON.stringify(status))),
+      tap(status =>  console.log(JSON.stringify(status))),
       catchError(this.handleError)
     );
   }

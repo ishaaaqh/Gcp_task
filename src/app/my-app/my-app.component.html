@@ -1,22 +1,6 @@
     <div class="container">
-      <div #mapElement class="map" id="map">{{currentGcp}}{{this.curretnImages}}
-    </div>
-  </div>
-    <div class="prevContainer">
-        <button class="previous-button" (click)="previous()">Previous Gcp</button>
-    </div>
-
-  <div class="nextContainer">
-      <button class="next-button" (click)="next()" *ngIf="this.currentGcp<6" >Next Gcp <label class ="currentGcp">{{currentGcp+1}}</label></button>
-      <button class="submit-button" *ngIf="this.currentGcp==6">Submit The Images</button>
-
-  </div>
-
-
-
-        <!-- <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig"> -->
-        <!-- </ngx-slick> -->
-
-         <!--  <div  id="container-images" *ngFor="let image of currentImages">
-            <img src='https://s3aws.blob.core.windows.net/uploads/dev-site/19/{{image.image}}' id="images" alt="">
-          </div> -->
+      <div #mapElement class="map" id="map">{{currentGcp}}{{this.curretnImages}}</div>
+  </div>   
+    <button class="previous-button" (click)="previous()">Previous Gcp</button>
+    <button class="next-button" (click)="next()" *ngIf="this.currentGcp<6" >Next Gcp <label class ="currentGcp">{{currentGcp+1}}</label></button>
+    <button class="submit-button" *ngIf="this.currentGcp==6">Submit The Images</button>
